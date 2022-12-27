@@ -16,9 +16,9 @@ RUN adduser -D $USER \
 # login as user
 USER $USER
 WORKDIR $HOME
+EXPOSE 3000
 
 COPY . .
 
 RUN sudo apk add ruby-dev
 RUN sudo gem install bundler
-RUN bundle install
