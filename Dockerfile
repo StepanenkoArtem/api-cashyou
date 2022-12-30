@@ -44,14 +44,15 @@ USER $USER
 WORKDIR /app
 
 RUN sudo chown -R $USER /app
+RUN sysctl vm.overcommit_memory=1
 
 EXPOSE 3000
 
-ADD Gemfile* ./
+ADD Gemfile ./
 
 RUN sudo gem install bundler -v 2.2.33
 RUN bundle config build.nokogiri --use-system-libraries
-RUN bundle install
 COPY . ./
+RUN bundle install
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

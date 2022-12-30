@@ -28,7 +28,8 @@ services:
   redis:
     image: "redis:alpine"
     volumes:
-      - redis-data:/data
+      - redis-data:/data 
+    env_file: .env 
       
   sidekiq:
     build: .

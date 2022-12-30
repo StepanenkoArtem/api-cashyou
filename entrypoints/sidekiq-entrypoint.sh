@@ -5,5 +5,6 @@ set -e
 if [ -f tmp/pids/server.pid ]; then
   rm tmp/pids/server.pid
 fi
- 
-bundle exec sidekiq
+
+bundle check || bundle install
+bundle exec sidekiq -C config/sidekiq.yml

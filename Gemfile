@@ -8,7 +8,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "redis", "~> 4.0"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem 'sidekiq', '~>6.0.0'
+gem 'sidekiq', '>= 6.4.1'
 
 gem "bootsnap", require: false
 gem "rack-cors"
