@@ -17,7 +17,7 @@ RUN apk add --no-cache --update libxml2 libxslt postgresql-libs tzdata \
     less \
     libstdc++ \
     libffi-dev \
-    libc-dev \ 
+    libc-dev \
     linux-headers \
     libxml2-dev \
     libxslt-dev \
@@ -29,7 +29,7 @@ RUN apk add --no-cache --update libxml2 libxslt postgresql-libs tzdata \
     pkgconfig \
     postgresql-dev \
     tzdata \
-    yarn 
+    yarn
 
 # create new user
 ARG USER=user
@@ -44,7 +44,6 @@ USER $USER
 WORKDIR /app
 
 RUN sudo chown -R $USER /app
-RUN sysctl vm.overcommit_memory=1
 
 EXPOSE 3000
 
