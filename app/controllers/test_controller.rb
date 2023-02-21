@@ -1,5 +1,5 @@
 class TestController < ApplicationController
-  def test 
+  def test
     render json: { health: :ok }, status: :ok
   end
 end

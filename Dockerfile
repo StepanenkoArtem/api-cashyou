@@ -35,23 +35,24 @@ RUN apk add --no-cache --update libxml2 libxslt postgresql-libs tzdata \
 ARG USER=user
 
 # add new user to sudoers
-RUN adduser -D ${USER} && \
-    echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel \
-    && adduser $USER wheel
+RUN adduser -D ${USER}
+RUN echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/wheel
+RUN adduser $USER wheel
 
 # login as user
 USER $USER
 WORKDIR /app
 
-RUN sudo chown -R $USER /app
+RUN sudo chown -R ${USER}:${USER} .
 
 EXPOSE 3000
 
-ADD Gemfile ./
-
-RUN sudo gem install bundler -v 2.2.33
+ADD Gemfile Gemfile.lock ./
+RUN gem install bundler
 RUN bundle config build.nokogiri --use-system-libraries
-COPY . ./
 RUN bundle install
 
+# COPY . .
+
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
+CMD ["rails", "server", "-b", "0.0.0.0"]

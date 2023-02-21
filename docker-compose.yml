@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
+    tmpfs: ["/tmp", "/log"]
     depends_on:
       - db
       - redis
@@ -17,24 +18,24 @@ services:
     tty: true
 
   db:
-    image: "postgres:alpine"
+    image: postgres:alpine
     volumes:
-      - db_data:/var/lib/postgresql/data
+      -  ./tmp/db:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     env_file: .env
     expose:
       - "5432"
-        
+
   redis:
     image: "redis:alpine"
     volumes:
-      - redis-data:/data 
-    env_file: .env 
-      
+      - redis-data:/data
+    env_file: .env
+
   sidekiq:
     build: .
     depends_on:
-      - app      
+      - app
       - db
       - redis
     volumes:
@@ -43,7 +44,7 @@ services:
     env_file: .env
     environment:
       RAILS_ENV: development
-    entrypoint: ./entrypoints/sidekiq-entrypoint.sh    
+    entrypoint: ./entrypoints/sidekiq-entrypoint.sh
 
 volumes:
   db_data:

@@ -6,5 +6,5 @@ if [ -f tmp/pids/server.pid ]; then
   rm tmp/pids/server.pid
 fi
 
-bundle check || bundle install
-bundle exec rails s -b 0.0.0.0
+sudo mkdir -p log tmp && sudo chown user:user log tmp db
+exec "$@"
